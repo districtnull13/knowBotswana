@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact/About - Know Botswana</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="top-banner">
+        <img src="images/banner.jpg" alt="Know Botswana">
+    </section>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="images/logo.png" alt="Know Botswana">
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li>
+                    <a href="#">About Botswana</a>
+                    <ul>
+                        <li><a href="geography.html">Geography & Nature</a></li>
+                        <li><a href="map.html">Map & Climate</a></li>
+                        <li><a href="economy.html">Economy</a></li>
+                        <li><a href="modern.html">Modern Botswana</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">History & Politics</a>
+                    <ul>
+                        <li><a href="history.html">History</a></li>
+                        <li><a href="government.html">Presidency & Government</a></li>
+                        <li><a href="events.html">Major Events</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">People & Culture</a>
+                    <ul>
+                        <li><a href="ethnic.html">Ethnic Groups</a></li>
+                        <li><a href="figures.html">Artistic & Historical Figures</a></li>
+                        <li><a href="culture.html">Culture & More</a></li>
+                        <li><a href="music.html">Music & Dance</a></li>
+                        <li><a href="cuisine.html">Cuisine</a></li>
+                        <li><a href="religion.html">Religion & Beliefs</a></li>
+                        <li><a href="languages.html">Languages</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Lifestyle & Activities</a>
+                    <ul>
+                        <li><a href="sports.html">Sports</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="tourism.html">Tourism</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Botswana & The World</a>
+                    <ul>
+                        <li><a href="diaspora.html">Diaspora & Global Influence</a></li>
+                        <li><a href="relations.html">Foreign Relations</a></li>
+                        <li><a href="trade.html">Trade & Partnerships</a></li>
+                        <li><a href="conservation.html">Conservation Efforts</a></li>
+                        <li><a href="exports.html">Cultural Exports</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Get Involved</a>
+                    <ul>
+                        <li><a href="contact.html" style="color: #A67B5B;">Contact/About</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="contact-intro-container">
+            <div class="contact-intro-content">
+                <h1>Contact/About</h1>
+                <p>Know Botswana is your gateway to discovering the heart of Botswana’s culture, history, and natural wonders. Connect with us to share your stories, ask questions, or contribute to our mission of celebrating Botswana’s global impact.</p>
+                <div class="contact-cta-button" onclick="scrollToForm()">Get in Touch</div>
+            </div>
+            <div class="contact-intro-image">
+                <img src="images/contact-collage.jpg" alt="Know Botswana Community">
+            </div>
+        </section>
+
+        <section class="contact-about-container">
+            <h2>About Know Botswana</h2>
+            <div class="contact-about-content">
+                <div class="contact-about-text">
+                    <p>Founded in 2025, Know Botswana is a dynamic platform dedicated to showcasing Botswana’s rich heritage and modern achievements. Our mission is to educate global audiences about Botswana’s Tswana culture, Okavango Delta, and contributions to conservation and diplomacy. From students to travelers, we provide engaging, accurate content to inspire pride and curiosity among Batswana and friends of Botswana worldwide.</p>
+                    <blockquote>
+                        “We aim to share Botswana’s story with the world, one connection at a time.” — Founder of Know Botswana, Donovan Ntsima, 2025
+                    </blockquote>
+                </div>
+                <div class="contact-about-image">
+                    <img src="images/about-team.jpg" alt="Know Botswana Team">
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-form-container" id="contact-form">
+            <h2>Contact Us</h2>
+            <div class="contact-form-content">
+                <p>Have questions, feedback, or ideas? Fill out the form below, and our team will get back to you promptly. Your input helps us grow and share Botswana’s story.</p>
+                <div class="contact-form">
+                    <div id="form-error" class="form-error"></div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" id="submit-btn" class="form-submit">Send Message</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-connect-container">
+            <h2>Connect Online</h2>
+            <div class="contact-connect-grid">
+                <div class="contact-connect-card">
+                    <img src="images/facebook-icon.jpg" alt="Facebook">
+                    <h3>Facebook</h3>
+                    <p>Join our 10,000+ followers for updates on Botswana’s culture and events.</p>
+                    <a href="https://facebook.com/knowbotswana" class="connect-link">Visit Page</a>
+                </div>
+                <div class="contact-connect-card">
+                    <img src="images/twitter-icon.jpg" alt="Twitter">
+                    <h3>Twitter</h3>
+                    <p>Follow us for news and insights about Botswana’s global impact.</p>
+                    <a href="https://twitter.com/knowbotswana" class="connect-link">Visit Page</a>
+                </div>
+                <div class="contact-connect-card">
+                    <img src="images/instagram-icon.jpg" alt="Instagram">
+                    <h3>Instagram</h3>
+                    <p>Explore stunning visuals of Botswana’s landscapes and heritage.</p>
+                    <a href="https://instagram.com/knowbotswana" class="connect-link">Visit Page</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-contribute-container">
+            <h2>Contribute</h2>
+            <div class="contact-contribute-content">
+                <p>Passionate about Botswana? We welcome guest articles, photos, and stories celebrating its culture, history, or conservation efforts. In 2024, our contributors shared 50+ stories, reaching 100,000 readers. Contact us to share your perspective and join our community.</p>
+                <div class="contribute-cta-button" onclick="scrollToFormWithStory()">Submit Your Story</div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Know Botswana</p>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
