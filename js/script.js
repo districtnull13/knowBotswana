@@ -32,37 +32,56 @@ document.querySelectorAll('#submit-btn').forEach(button => {
         const errorDiv = form.querySelector('#form-error');
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        // Clear previous error messages
+        // Clear previous messages
         errorDiv.textContent = '';
+        let successDiv = form.querySelector('#form-success');
+        if (successDiv) {
+            successDiv.style.display = 'none';
+        }
 
         // Validate inputs
         if (!name || !email || !message) {
             errorDiv.textContent = 'Please fill out all fields.';
-            return;
-        }
-
-        if (!emailRegex.test(email)) {
-            errorDiv.textContent = 'Please enter a valid email address.';
-            return;
-        }
-
-        // Create success notification div if not already present
-        let successDiv = document.getElementById('form-success');
-        if (!successDiv) {
-            successDiv = document.createElement('div');
-            successDiv.id = 'form-success';
-            successDiv.style.cssText = `
-                display: none;
-                background-color: #4CAF50;
-                color: white;
+            errorDiv.style.cssText = `
+                color: #D32F2F;
                 padding: 10px;
                 margin-top: 10px;
                 border-radius: 5px;
                 text-align: center;
                 font-family: 'Ubuntu', sans-serif;
             `;
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            errorDiv.textContent = 'Please enter a valid email address.';
+            errorDiv.style.cssText = `
+                color: #D32F2F;
+                padding: 10px;
+                margin-top: 10px;
+                border-radius: 5px;
+                text-align: center;
+                font-family: 'Ubuntu', sans-serif;
+            `;
+            return;
+        }
+
+        // Create or update success notification div
+        if (!successDiv) {
+            successDiv = document.createElement('div');
+            successDiv.id = 'form-success';
             form.appendChild(successDiv);
         }
+        successDiv.style.cssText = `
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Ubuntu', sans-serif;
+        `;
 
         // Send email using EmailJS
         emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
@@ -88,6 +107,14 @@ document.querySelectorAll('#submit-btn').forEach(button => {
             },
             function (error) {
                 errorDiv.textContent = 'Failed to send message. Please try again.';
+                errorDiv.style.cssText = `
+                    color: #D32F2F;
+                    padding: 10px;
+                    margin-top: 10px;
+                    border-radius: 5px;
+                    text-align: center;
+                    font-family: 'Ubuntu', sans-serif;
+                `;
                 console.error('EmailJS error:', error);
             }
         );
