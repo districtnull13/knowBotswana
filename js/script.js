@@ -1,9 +1,16 @@
+/* Initialize EmailJS with your public key */
+(function () {
+    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+})();
+
+/* Scroll to contact form and focus on name field */
 function scrollToForm() {
     const formSection = document.getElementById('contact-form');
     formSection.scrollIntoView({ behavior: 'smooth' });
     document.getElementById('name').focus();
 }
 
+/* Scroll to contact form, pre-fill message, and focus on name field */
 function scrollToFormWithStory() {
     const formSection = document.getElementById('contact-form');
     const messageField = document.getElementById('message');
@@ -12,50 +19,77 @@ function scrollToFormWithStory() {
     document.getElementById('name').focus();
 }
 
-document.getElementById('submit-btn').addEventListener('click', function (e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-    const errorDiv = document.getElementById('form-error');
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/* Handle form submission for all forms with submit-btn */
+document.querySelectorAll('#submit-btn').forEach(button => {
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
 
-    errorDiv.textContent = '';
+        // Get form fields
+        const form = button.closest('form');
+        const name = form.querySelector('#name').value.trim();
+        const email = form.querySelector('#email').value.trim();
+        const message = form.querySelector('#message').value.trim();
+        const errorDiv = form.querySelector('#form-error');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!name || !email || !message) {
-        errorDiv.textContent = 'Please fill out all fields.';
-        return;
-    }
+        // Clear previous error messages
+        errorDiv.textContent = '';
 
-    if (!emailRegex.test(email)) {
-        errorDiv.textContent = 'Please enter a valid email address.';
-        return;
-    }
-
-    // Placeholder for email sending logic (e.g., using EmailJS or server-side API)
-    // Example with EmailJS (requires setup with EmailJS account):
-    /*
-    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-        from_name: name,
-        from_email: email,
-        message: message,
-        to_email: 'fcse23-018@thuto.bac.ac.bw'
-    }).then(
-        function(response) {
-            alert('Message sent successfully!');
-            document.getElementById('name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('message').value = '';
-        },
-        function(error) {
-            errorDiv.textContent = 'Failed to send message. Please try again.';
+        // Validate inputs
+        if (!name || !email || !message) {
+            errorDiv.textContent = 'Please fill out all fields.';
+            return;
         }
-    );
-    */
 
-    // For demonstration, simulate successful submission
-    alert('Message sent successfully to fcse23-018@thuto.bac.ac.bw!');
-    document.getElementById('name').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('message').value = '';
+        if (!emailRegex.test(email)) {
+            errorDiv.textContent = 'Please enter a valid email address.';
+            return;
+        }
+
+        // Create success notification div if not already present
+        let successDiv = document.getElementById('form-success');
+        if (!successDiv) {
+            successDiv = document.createElement('div');
+            successDiv.id = 'form-success';
+            successDiv.style.cssText = `
+                display: none;
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px;
+                margin-top: 10px;
+                border-radius: 5px;
+                text-align: center;
+                font-family: 'Ubuntu', sans-serif;
+            `;
+            form.appendChild(successDiv);
+        }
+
+        // Send email using EmailJS
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+            from_name: name,
+            from_email: email,
+            message: message,
+            to_email: 'fcse23-018@thuto.bac.ac.bw'
+        }).then(
+            function (response) {
+                // Show success message
+                successDiv.textContent = 'Message sent successfully!';
+                successDiv.style.display = 'block';
+
+                // Clear form fields
+                form.querySelector('#name').value = '';
+                form.querySelector('#email').value = '';
+                form.querySelector('#message').value = '';
+
+                // Hide success message after 3 seconds
+                setTimeout(() => {
+                    successDiv.style.display = 'none';
+                }, 3000);
+            },
+            function (error) {
+                errorDiv.textContent = 'Failed to send message. Please try again.';
+                console.error('EmailJS error:', error);
+            }
+        );
+    });
 });
