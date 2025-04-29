@@ -1,6 +1,6 @@
 // Initialize EmailJS with your Public Key
 (function(){
-    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+    emailjs.init("4-jTGLqAk6BRlmppF");
 })();
 
 const form = document.getElementById('contactForm');
@@ -65,10 +65,10 @@ function sendEmail() {
         from_email: document.getElementById('email').value,
         subject: document.getElementById('subject').value,
         message: document.getElementById('message').value,
-        to_email: 'fcse23@thuto.bac.ac.bw'
+        to_email: 'thedonswiss@gmail.com'
     };
 
-    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+    emailjs.send('service_knowBotswana', 'template_prqlp0b', templateParams)
         .then(function(response) {
             status.className = 'text-green-500';
             status.textContent = 'Email sent successfully!';
