@@ -1,122 +1,81 @@
-/* Initialize EmailJS with your public key */
-(function () {
-    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+// Initialize EmailJS with your Public Key
+(function(){
+    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS Public Key
 })();
 
-/* Scroll to contact form and focus on name field */
-function scrollToForm() {
-    const formSection = document.getElementById('contact-form');
-    formSection.scrollIntoView({ behavior: 'smooth' });
-    document.getElementById('name').focus();
-}
+const form = document.getElementById('contactForm');
+const status = document.getElementById('formStatus');
 
-/* Scroll to contact form, pre-fill message, and focus on name field */
-function scrollToFormWithStory() {
-    const formSection = document.getElementById('contact-form');
-    const messageField = document.getElementById('message');
-    messageField.value = "I’d like to submit a story about [Botswana culture/history/conservation]...";
-    formSection.scrollIntoView({ behavior: 'smooth' });
-    document.getElementById('name').focus();
-}
-
-/* Handle form submission for all forms with submit-btn */
-document.querySelectorAll('#submit-btn').forEach(button => {
-    button.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        // Get form fields
-        const form = button.closest('form');
-        const name = form.querySelector('#name').value.trim();
-        const email = form.querySelector('#email').value.trim();
-        const message = form.querySelector('#message').value.trim();
-        const errorDiv = form.querySelector('#form-error');
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        // Clear previous messages
-        errorDiv.textContent = '';
-        let successDiv = form.querySelector('#form-success');
-        if (successDiv) {
-            successDiv.style.display = 'none';
-        }
-
-        // Validate inputs
-        if (!name || !email || !message) {
-            errorDiv.textContent = 'Please fill out all fields.';
-            errorDiv.style.cssText = `
-                color: #D32F2F;
-                padding: 10px;
-                margin-top: 10px;
-                border-radius: 5px;
-                text-align: center;
-                font-family: 'Ubuntu', sans-serif;
-            `;
-            return;
-        }
-
-        if (!emailRegex.test(email)) {
-            errorDiv.textContent = 'Please enter a valid email address.';
-            errorDiv.style.cssText = `
-                color: #D32F2F;
-                padding: 10px;
-                margin-top: 10px;
-                border-radius: 5px;
-                text-align: center;
-                font-family: 'Ubuntu', sans-serif;
-            `;
-            return;
-        }
-
-        // Create or update success notification div
-        if (!successDiv) {
-            successDiv = document.createElement('div');
-            successDiv.id = 'form-success';
-            form.appendChild(successDiv);
-        }
-        successDiv.style.cssText = `
-            display: none;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            text-align: center;
-            font-family: 'Ubuntu', sans-serif;
-        `;
-
-        // Send email using EmailJS
-        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-            from_name: name,
-            from_email: email,
-            message: message,
-            to_email: 'fcse23-018@thuto.bac.ac.bw'
-        }).then(
-            function (response) {
-                // Show success message
-                successDiv.textContent = 'Message sent successfully!';
-                successDiv.style.display = 'block';
-
-                // Clear form fields
-                form.querySelector('#name').value = '';
-                form.querySelector('#email').value = '';
-                form.querySelector('#message').value = '';
-
-                // Hide success message after 3 seconds
-                setTimeout(() => {
-                    successDiv.style.display = 'none';
-                }, 3000);
-            },
-            function (error) {
-                errorDiv.textContent = 'Failed to send message. Please try again.';
-                errorDiv.style.cssText = `
-                    color: #D32F2F;
-                    padding: 10px;
-                    margin-top: 10px;
-                    border-radius: 5px;
-                    text-align: center;
-                    font-family: 'Ubuntu', sans-serif;
-                `;
-                console.error('EmailJS error:', error);
-            }
-        );
-    });
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    if (validateForm()) {
+        sendEmail();
+    }
 });
+
+function validateForm() {
+    let isValid = true;
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const subject = document.getElementById('subject');
+    const message = document.getElementById('message');
+
+    // Reset error states
+    [name, email, subject, message].forEach(field => {
+        field.classList.remove('border-error');
+        document.getElementById(`${field.id}Error`).style.display = 'none';
+    });
+
+    // Name validation
+    if (name.value.trim().length < 2) {
+        showError(name, 'nameError');
+        isValid = false;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.value.trim())) {
+        showError(email, 'emailError');
+        isValid = false;
+    }
+
+    // Subject validation
+    if (subject.value.trim() === '') {
+        showError(subject, 'subjectError');
+        isValid = false;
+    }
+
+    // Message validation
+    if (message.value.trim().length < 10) {
+        showError(message, 'messageError');
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+function showError(field, errorId) {
+    field.classList.add('border-error');
+    document.getElementById(errorId).style.display = 'block';
+}
+
+function sendEmail() {
+    const templateParams = {
+        from_name: document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value,
+        to_email: 'fcse23@thuto.bac.ac.bw'
+    };
+
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+        .then(function(response) {
+            status.className = 'text-green-500';
+            status.textContent = 'Email sent successfully!';
+            form.reset();
+        }, function(error) {
+            status.className = 'text-red-500';
+            status.textContent = 'Failed to send email. Please try again.';
+            console.error('EmailJS error:', error);
+        });
+}
